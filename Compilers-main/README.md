@@ -13,11 +13,6 @@ Grammar Parsing:
 2. Statements: Pass all the grammar rules, such as label statement, compound statement, Jump statement etc.
 3. Expressions: Arithmetic, relational, and logical expressions are parsed accurately, including operator precedence and associativity. The parser correctly handles binary and unary operations, parenthesized expressions, and variable references. Pass all the grammar rules.
 4. Abysn files: Each grammar rule has an appropriate Absyn node
-Error Recovery:
-
-Use of Resources and AI Tools
-Online C89 Specification: Provided on Moodle
-AI Tools: ChatGPT for code structure and general information
 
 	
 
