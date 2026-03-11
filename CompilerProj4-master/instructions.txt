@@ -1,0 +1,70 @@
+This email is regarding what you are implementing in project 3. Also attached is a project 2 skeleton code containing my lexer and parser. 
+It should "just work" by running the shell script contained within. If you have any issues at all, please let me know. 
+Please note, the test file is a valid input to project 2. It is not necessarily a valid input for project 3 (IE it does not type check).
+
+In project 3, we are implementing a type checker for our modified C language. In a standard type checker (something like java), 
+you will get errors for assigning a value to a variable of the wrong type. Example:
+
+      int x = "77";
+
+This is not always the case in C. Standard C is not very picky about how values can be assigned. Chars can be assigned to numbers, 
+Strings act as Arrays, Arrays are secretly just pointers, etc.
+
+We are going to make some new type rules for our new version of C. These are the rules you will be responsible for implementing:
+
+    1. Numbers and chars will be different values
+        a. This induces a type error: var int x = 'c';
+        b. And so does this: var char x = 90;
+    2. Any number can be assigned to a pointer of any type
+        a. This passes the type checker: var char******* p = 8;
+    3. If an Array is initialized, it must be initialized with a list:
+        a. var int[3][2] x = {{1,2},{1,2},{1,2}};
+            i. Notice that the list of the correct length ([3][2])
+        b. If the list is not of the correct length ([3][2]) then it fails the type check.
+    4. Structs can also be initialized with a list:
+        a. var myStruct x = {1,2,3};
+        b. The list given must match the elements of myStruct
+        c. See below for an example.
+    5. Arrays like var int[][] x ={ ... } ; must be treated very carefully.
+        a. This would not type check for x: {{1,2},{1,2,3}}
+        b. There must exist some a,b such that the list provided type checks with int[a][b]
+        c. Example:
+            i. int[][] x = {{1,2},{1,2}}
+            ii. int[a][b] x = {{1,2},{1,2}}
+            iii. int[2][2] x = {{1,2},{1,2}}
+                1. a=2 
+                2. b=2 
+            iv. List is length [2][2], therefore type check passes
+    6. Math operations only accept numbers
+    7. Unions are not initialized with a list. They are initialized with a value that type checks for one of its members.
+    8. These type rules apply in a variety of situations. Types must be checked when calling functions, doing math operations, declaring variables, etc. 
+       It is up to you to recognize when something needs to be type checked. 
+        a. When in doubt, reach out!
+
+    Here are some examples of things that would and wouldn't type check with our rules:
+
+
+    struct myStruct {
+          int[][] x;
+          int y;
+    }
+    // Would Type Check
+    var myStruct s = {{{1,2},{1,2}},1};
+    //  Would not Type Check
+    var myStruct s = {1,2};
+
+    // Would Type Check
+    var char[] cs = {'a', 'A'};
+    // Would not Type Check
+    var char[] cs = {'a', 65};
+
+    // Would Type Check
+    8 + 9;
+    // Would not Type Check
+    'a' < 100;
+
+Once you have finished the type checking portion, you are 90% done. The next step would be allocation records and escape analysis.
+Do the type checking first. The rest of the project will be more clear after you have finished the type checking. 
+
+Let me know if you have any questions,
+Brandon
